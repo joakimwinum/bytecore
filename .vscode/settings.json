@@ -1,0 +1,9 @@
+{
+    "python.linting.mypyEnabled": true,
+    "python.linting.mypyArgs": [
+        "--strict"
+    ],
+    "cSpell.words": [
+        "subtractor"
+    ]
+}
