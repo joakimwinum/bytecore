@@ -1,6 +1,6 @@
-from src.replay_register import ReplayRegister
-from src.register import Register
-from src.byte import Byte
+from bytecore.replay_register import ReplayRegister
+from bytecore.register import Register
+from bytecore.byte import Byte
 
 
 class ProxyRegister:

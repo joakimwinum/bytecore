@@ -1,11 +1,11 @@
-from src.memory import Memory
-from src.register import Register
-from src.accumulator import Accumulator
-from src.byte_register import ByteRegister
-from src.byte import Byte
-from src.state import State
-from src.control_unit import ControlUnit
-from src.control_unit_state import ControlUnitState
+from bytecore.memory import Memory
+from bytecore.register import Register
+from bytecore.accumulator import Accumulator
+from bytecore.byte_register import ByteRegister
+from bytecore.byte import Byte
+from bytecore.state import State
+from bytecore.control_unit import ControlUnit
+from bytecore.control_unit_state import ControlUnitState
 
 
 class Cpu:

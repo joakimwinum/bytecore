@@ -1,7 +1,7 @@
-from src.memory import Memory
-from src.register import Register
-from src.byte import Byte
-from src.control_unit_state import ControlUnitState
+from bytecore.memory import Memory
+from bytecore.register import Register
+from bytecore.byte import Byte
+from bytecore.control_unit_state import ControlUnitState
 
 
 class State:

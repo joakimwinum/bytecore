@@ -1,8 +1,8 @@
-from src.register import Register
-from src.constant_register import ConstantRegister
-from src.memory import Memory
-from src.byte import Byte
-from src.bit import Bit
+from bytecore.register import Register
+from bytecore.constant_register import ConstantRegister
+from bytecore.memory import Memory
+from bytecore.byte import Byte
+from bytecore.bit import Bit
 
 
 class Accumulator:

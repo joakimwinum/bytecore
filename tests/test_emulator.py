@@ -1,8 +1,8 @@
-from src.memory import Memory
-from src.state import State
-from src.byte import Byte
-from src.opcode import Opcode
-from src.emulator import ByteCore
+from bytecore.memory import Memory
+from bytecore.state import State
+from bytecore.byte import Byte
+from bytecore.opcode import Opcode
+from bytecore.emulator import ByteCore
 
 
 class TestEmulator:

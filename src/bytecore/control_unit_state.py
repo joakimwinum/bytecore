@@ -1,5 +1,5 @@
-from src.byte import Byte
-from src.bit import Bit
+from bytecore.byte import Byte
+from bytecore.bit import Bit
 
 
 class ControlUnitState:

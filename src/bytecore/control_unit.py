@@ -1,11 +1,11 @@
-from src.memory import Memory
-from src.register import Register
-from src.constant_register import ConstantRegister
-from src.byte import Byte
-from src.opcode import Opcode
-from src.control_unit_state import ControlUnitState
-from src.bit import Bit
-from src.accumulator import Accumulator
+from bytecore.memory import Memory
+from bytecore.register import Register
+from bytecore.constant_register import ConstantRegister
+from bytecore.byte import Byte
+from bytecore.opcode import Opcode
+from bytecore.control_unit_state import ControlUnitState
+from bytecore.bit import Bit
+from bytecore.accumulator import Accumulator
 
 
 class ControlUnit:

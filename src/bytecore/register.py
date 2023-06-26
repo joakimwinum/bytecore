@@ -1,5 +1,5 @@
 from typing import Protocol
-from src.byte import Byte
+from bytecore.byte import Byte
 
 
 class Register(Protocol):  # pragma: no cover

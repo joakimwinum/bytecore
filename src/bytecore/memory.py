@@ -1,8 +1,8 @@
-from src.byte_register import ByteRegister
-from src.register import Register
-from src.proxy_register import ProxyRegister
-from src.replay_register import ReplayRegister
-from src.byte import Byte
+from bytecore.byte_register import ByteRegister
+from bytecore.register import Register
+from bytecore.proxy_register import ProxyRegister
+from bytecore.replay_register import ReplayRegister
+from bytecore.byte import Byte
 
 
 class Memory:

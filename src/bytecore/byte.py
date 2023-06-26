@@ -1,4 +1,4 @@
-from src.bit import Bit
+from bytecore.bit import Bit
 
 
 class Byte:

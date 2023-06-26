@@ -1,5 +1,5 @@
-from src.memory import Memory
-from src.byte import Byte
+from bytecore.memory import Memory
+from bytecore.byte import Byte
 
 
 class TestMemory:

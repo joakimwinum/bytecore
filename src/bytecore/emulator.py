@@ -1,8 +1,8 @@
-from src.memory import Memory
-from src.byte_register import ByteRegister
-from src.byte import Byte
-from src.state import State
-from src.cpu import Cpu
+from bytecore.memory import Memory
+from bytecore.byte_register import ByteRegister
+from bytecore.byte import Byte
+from bytecore.state import State
+from bytecore.cpu import Cpu
 
 
 class ByteCore:

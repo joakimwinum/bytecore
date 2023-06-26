@@ -1,7 +1,7 @@
-from src.register import Register
+from bytecore.register import Register
 from typing import Optional
-from src.byte import Byte
-from src.bit import Bit
+from bytecore.byte import Byte
+from bytecore.bit import Bit
 
 
 class ReplayRegister:

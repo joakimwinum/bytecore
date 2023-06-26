@@ -1,9 +1,9 @@
-from src.memory import Memory
-from src.byte_register import ByteRegister
-from src.cpu import Cpu
-from src.state import State
-from src.byte import Byte
-from src.opcode import Opcode
+from bytecore.memory import Memory
+from bytecore.byte_register import ByteRegister
+from bytecore.cpu import Cpu
+from bytecore.state import State
+from bytecore.byte import Byte
+from bytecore.opcode import Opcode
 
 
 class TestCpu:

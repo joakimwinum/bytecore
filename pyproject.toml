@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bytecore"
+version = "1.0.0"
+authors = [
+  { name="Joakim Winum Lien", email="joakim@winum.xyz" },
+]
+description = "A minimal, 8-bit CPU emulator designed to help developers explore low-level computing concepts."
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/joakimwinum/bytecore"
+"Bug Tracker" = "https://github.com/joakimwinum/bytecore/issues"

@@ -1,7 +1,7 @@
-from src.byte import Byte
-from src.bit import Bit
-from src.register import Register
-from src.constant_register import ConstantRegister
+from bytecore.byte import Byte
+from bytecore.bit import Bit
+from bytecore.register import Register
+from bytecore.constant_register import ConstantRegister
 
 
 class ByteRegister:

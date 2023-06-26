@@ -106,13 +106,13 @@ You can also use Gitpod to run the emulator by clicking [here](https://gitpod.io
 
 ### Running the Emulator
 
-Create a new Python file (e.g., `example.py`) in the root directory and add the following import statements:
+Create a new Python file (e.g., `example.py`) in the src directory and add the following import statements:
 
 ```python
-from src.memory import Memory
-from src.byte import Byte
-from src.opcode import Opcode
-from src.emulator import ByteCore
+from bytecore.memory import Memory
+from bytecore.byte import Byte
+from bytecore.opcode import Opcode
+from bytecore.emulator import ByteCore
 ```
 
 Next, initialize a 64KB array of bytes as the memory:
@@ -175,7 +175,7 @@ print(memory_dump[0:20])
 Finally, to run your `example.py` file, use:
 
 ```bash
-python example.py
+python src/example.py
 ```
 
 ## Example Programs
@@ -205,10 +205,10 @@ This program begins with a simple syntax using hexadecimal numbers for ease of d
 Conversion to a format that the emulator understands:
 
 ```python
-from src.memory import Memory
-from src.byte import Byte
-from src.opcode import Opcode
-from src.emulator import ByteCore
+from bytecore.memory import Memory
+from bytecore.byte import Byte
+from bytecore.opcode import Opcode
+from bytecore.emulator import ByteCore
 
 memory_bytes = Memory.get_default_memory_bytes()
 
@@ -302,10 +302,10 @@ For the advanced program, the same process is followed. We start with an easy-to
 Translation to the emulator-friendly format:
 
 ```python
-from src.memory import Memory
-from src.byte import Byte
-from src.opcode import Opcode
-from src.emulator import ByteCore
+from bytecore.memory import Memory
+from bytecore.byte import Byte
+from bytecore.opcode import Opcode
+from bytecore.emulator import ByteCore
 
 memory_bytes = Memory.get_default_memory_bytes()
 
@@ -394,4 +394,4 @@ print(output)  # prints 95
 
 ## License
 
-This project is licensed under the terms of the MIT License. See the [LICENSE](LICENSE) file for the full text.
+This project is licensed under the terms of the MIT License. See the [LICENSE](https://github.com/joakimwinum/bytecore/blob/main/LICENSE) file for the full text.
