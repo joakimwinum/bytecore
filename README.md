@@ -280,15 +280,15 @@ For the advanced program, the same process is followed. We start with an easy-to
 # FE 0F STORE
 # FE 10 01
 # FE 11 01
-# FE 0F LOAD
-# FE 11 01
-# FE 12 01
-# FE 13 JZ
-# FE 14 FF
-# FE 15 00
-# FE 16 JMP
-# FE 17 FE
-# FE 18 00
+# FE 12 LOAD
+# FE 13 01
+# FE 14 01
+# FE 15 JZ
+# FE 16 FF
+# FE 17 00
+# FE 18 JMP
+# FE 19 FE
+# FE 1A 00
 
 # FF 00 LOAD
 # FF 01 01
