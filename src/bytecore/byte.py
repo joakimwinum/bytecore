@@ -7,6 +7,9 @@ class Byte:
     COUNT_VALUES: int = 256
     DEFAULT_BYTE: 'Byte'
 
+    _hex_characters = {'0', '1', '2', '3', '4', '5',
+                       '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'}
+
     _bytes: dict[int, 'Byte'] = {}
 
     def __new__(cls, value: int) -> 'Byte':
@@ -22,6 +25,15 @@ class Byte:
     @staticmethod
     def from_bit(bit: Bit) -> 'Byte':
         return Byte(bit.value)
+
+    @staticmethod
+    def from_hex(hex_value: str) -> 'Byte':
+        if len(hex_value) != 2:
+            raise ValueError
+        for hex_character in hex_value:
+            if hex_character.upper() not in Byte._hex_characters:
+                raise ValueError
+        return Byte(int(hex_value, 16))
 
     @property
     def value(self) -> int:

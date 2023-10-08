@@ -3,6 +3,7 @@ from bytecore.state import State
 from bytecore.byte import Byte
 from bytecore.opcode import Opcode
 from bytecore.emulator import ByteCore
+from bytecore.memory_bytes_builder import MemoryBytesBuilder
 
 
 class TestEmulator:
@@ -165,93 +166,52 @@ class TestEmulator:
     def test__cycle_until_halt__advanced_example_program_that_tests_all_opcodes__halts_and_last_memory_location_contains_expected_value(self) -> None:
         # Arrange
         expected = Byte(95)
-        memory_bytes = Memory.get_default_memory_bytes()
-
-        memory_bytes[0] = Opcode.JMP
-        # 00 00 JMP
-        memory_bytes[1] = Byte(254)
-        # 00 01 FE
-        memory_bytes[2] = Byte(0)
-        # 00 02 00
-
-        memory_bytes[256] = Byte(55)
-        # 01 00 37; 55
-        memory_bytes[257] = Byte(20)
-        # 01 01 14; 20
-        memory_bytes[258] = Byte(2)
-        # 01 02 02;  2
-        memory_bytes[259] = Byte(1)
-        # 01 03 01;  1
-
-        memory_bytes[65024] = Opcode.LOAD
-        # FE 00 LOAD
-        memory_bytes[65025] = Byte(1)
-        # FE 01 01
-        memory_bytes[65026] = Byte(0)
-        # FE 02 00
-        memory_bytes[65027] = Opcode.ADD
-        # FE 03 ADD
-        memory_bytes[65028] = Byte(1)
-        # FE 04 01
-        memory_bytes[65029] = Byte(2)
-        # FE 05 02
-        memory_bytes[65030] = Opcode.STORE
-        # FE 06 STORE
-        memory_bytes[65031] = Byte(1)
-        # FE 07 01
-        memory_bytes[65032] = Byte(0)
-        # FE 08 00
-        memory_bytes[65033] = Opcode.LOAD
-        # FE 09 LOAD
-        memory_bytes[65034] = Byte(1)
-        # FE 0A 01
-        memory_bytes[65035] = Byte(1)
-        # FE 0B 01
-        memory_bytes[65036] = Opcode.SUB
-        # FE 0C SUB
-        memory_bytes[65037] = Byte(1)
-        # FE 0D 01
-        memory_bytes[65038] = Byte(3)
-        # FE 0E 03
-        memory_bytes[65039] = Opcode.STORE
-        # FE 0F STORE
-        memory_bytes[65040] = Byte(1)
-        # FE 10 01
-        memory_bytes[65041] = Byte(1)
-        # FE 11 01
-        memory_bytes[65042] = Opcode.LOAD
-        # FE 0F LOAD
-        memory_bytes[65043] = Byte(1)
-        # FE 11 01
-        memory_bytes[65044] = Byte(1)
-        # FE 12 01
-        memory_bytes[65045] = Opcode.JZ
-        # FE 13 JZ
-        memory_bytes[65046] = Byte(255)
-        # FE 14 FF
-        memory_bytes[65047] = Byte(0)
-        # FE 15 00
-        memory_bytes[65048] = Opcode.JMP
-        # FE 16 JMP
-        memory_bytes[65049] = Byte(254)
-        # FE 17 FE
-        memory_bytes[65050] = Byte(0)
-        # FE 18 00
-
-        memory_bytes[65280] = Opcode.LOAD
-        # FF 00 LOAD
-        memory_bytes[65281] = Byte(1)
-        # FF 01 01
-        memory_bytes[65282] = Byte(0)
-        # FF 02 00
-        memory_bytes[65283] = Opcode.STORE
-        # FF 03 STORE
-        memory_bytes[65284] = Byte(255)
-        # FF 04 FF
-        memory_bytes[65285] = Byte(255)
-        # FF 05 FF
-        memory_bytes[65286] = Opcode.HALT
-        # FF 06 HALT
+        memory_bytes = MemoryBytesBuilder()\
+            .msb('00').lsb('00').jmp()\
+            .msb('00').lsb('01').data('FE')\
+            .msb('00').lsb('02').data('00')\
+            \
+            .msb('01').lsb('00').data('37').comment('55')\
+            .msb('01').lsb('01').data('14').comment('20')\
+            .msb('01').lsb('02').data('02').comment(' 2')\
+            .msb('01').lsb('03').data('01').comment(' 1')\
+            \
+            .msb('FE').lsb('00').load()\
+            .msb('FE').lsb('01').data('01')\
+            .msb('FE').lsb('02').data('00')\
+            .msb('FE').lsb('03').add()\
+            .msb('FE').lsb('04').data('01')\
+            .msb('FE').lsb('05').data('02')\
+            .msb('FE').lsb('06').store()\
+            .msb('FE').lsb('07').data('01')\
+            .msb('FE').lsb('08').data('00')\
+            .msb('FE').lsb('09').load()\
+            .msb('FE').lsb('0A').data('01')\
+            .msb('FE').lsb('0B').data('01')\
+            .msb('FE').lsb('0C').sub()\
+            .msb('FE').lsb('0D').data('01')\
+            .msb('FE').lsb('0E').data('03')\
+            .msb('FE').lsb('0F').store()\
+            .msb('FE').lsb('10').data('01')\
+            .msb('FE').lsb('11').data('01')\
+            .msb('FE').lsb('12').load()\
+            .msb('FE').lsb('13').data('01')\
+            .msb('FE').lsb('14').data('01')\
+            .msb('FE').lsb('15').jz()\
+            .msb('FE').lsb('16').data('FF')\
+            .msb('FE').lsb('17').data('00')\
+            .msb('FE').lsb('18').jmp()\
+            .msb('FE').lsb('19').data('FE')\
+            .msb('FE').lsb('1A').data('00')\
+            \
+            .msb('FF').lsb('00').load()\
+            .msb('FF').lsb('01').data('01')\
+            .msb('FF').lsb('02').data('00')\
+            .msb('FF').lsb('03').store()\
+            .msb('FF').lsb('04').data('FF')\
+            .msb('FF').lsb('05').data('FF')\
+            .msb('FF').lsb('06').halt()\
+            .build()
 
         byte_core = ByteCore(memory_bytes)
 
