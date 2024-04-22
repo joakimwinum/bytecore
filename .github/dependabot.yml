@@ -7,3 +7,10 @@ updates:
       day: "tuesday"
       time: "19:30"
       timezone: "CET"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "19:30"
+      timezone: "CET"
