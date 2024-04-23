@@ -254,3 +254,69 @@ class TestEmulator:
 
         # Assert
         assert output == expected
+
+    def test__cycle__jz_works_as_expected_after_add__accumulator_and_pc_contains_expected_values(self) -> None:
+        # Arrange
+        expected_accumulator = Byte(1)
+        expected_msb_register = Byte(0)
+        expected_lsb_register = Byte(9)
+        memory_bytes = MemoryBytesBuilder()\
+            .msb('00').lsb('00').load()\
+            .msb('00').lsb('01').data('01')\
+            .msb('00').lsb('02').data('00')\
+            .msb('00').lsb('03').add()\
+            .msb('00').lsb('04').data('01')\
+            .msb('00').lsb('05').data('01')\
+            .msb('00').lsb('06').jz()\
+            .msb('00').lsb('07').data('FF')\
+            .msb('00').lsb('08').data('FF')\
+            \
+            .msb('01').lsb('00').data('00').comment(' 0')\
+            .msb('01').lsb('01').data('01').comment(' 1')\
+            .build()
+
+        byte_core = ByteCore(memory_bytes)
+
+        # Act
+        byte_core.cycle()
+        byte_core.cycle()
+        byte_core.cycle()
+        dump = byte_core.dump()
+
+        # Assert
+        assert dump.accumulator == expected_accumulator
+        assert dump.pc_msb_register == expected_msb_register
+        assert dump.pc_lsb_register == expected_lsb_register
+
+    def test__cycle__jz_works_as_expected_after_sub__accumulator_and_pc_contains_expected_values(self) -> None:
+        # Arrange
+        expected_accumulator = Byte(255)
+        expected_msb_register = Byte(0)
+        expected_lsb_register = Byte(9)
+        memory_bytes = MemoryBytesBuilder()\
+            .msb('00').lsb('00').load()\
+            .msb('00').lsb('01').data('01')\
+            .msb('00').lsb('02').data('00')\
+            .msb('00').lsb('03').sub()\
+            .msb('00').lsb('04').data('01')\
+            .msb('00').lsb('05').data('01')\
+            .msb('00').lsb('06').jz()\
+            .msb('00').lsb('07').data('FF')\
+            .msb('00').lsb('08').data('FF')\
+            \
+            .msb('01').lsb('00').data('00').comment(' 0')\
+            .msb('01').lsb('01').data('01').comment(' 1')\
+            .build()
+
+        byte_core = ByteCore(memory_bytes)
+
+        # Act
+        byte_core.cycle()
+        byte_core.cycle()
+        byte_core.cycle()
+        dump = byte_core.dump()
+
+        # Assert
+        assert dump.accumulator == expected_accumulator
+        assert dump.pc_msb_register == expected_msb_register
+        assert dump.pc_lsb_register == expected_lsb_register

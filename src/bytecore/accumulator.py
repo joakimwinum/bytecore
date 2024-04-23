@@ -64,9 +64,9 @@ class Accumulator:
 
         result = self._byte_adder_helper(temp, memory)
 
-        self._accumulator.write_high()
-        self._accumulator.set_bus(result)
-        self._accumulator.write_low()
+        self.write_high()
+        self.set_bus(result)
+        self.write_low()
 
     def sub_memory_from_accumulator(self) -> None:
         self._temp_register.read_high()
@@ -79,9 +79,9 @@ class Accumulator:
 
         result = self._byte_subtractor_helper(temp, memory)
 
-        self._accumulator.write_high()
-        self._accumulator.set_bus(result)
-        self._accumulator.write_low()
+        self.write_high()
+        self.set_bus(result)
+        self.write_low()
 
     def write_high(self) -> None:
         self._accumulator.write_high()
