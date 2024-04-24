@@ -320,3 +320,86 @@ class TestEmulator:
         assert dump.accumulator == expected_accumulator
         assert dump.pc_msb_register == expected_msb_register
         assert dump.pc_lsb_register == expected_lsb_register
+
+    def test__cycle__chaining_load_add_store_sub_jz__accumulator_and_pc_and_stored_value_contains_expected_values(self) -> None:
+        # Arrange
+        expected_accumulator = Byte(0)
+        expected_msb_register = Byte(255)
+        expected_lsb_register = Byte(255)
+        expected_stored_value = Byte(1)
+        memory_bytes = MemoryBytesBuilder()\
+            .msb('00').lsb('00').load()\
+            .msb('00').lsb('01').data('01')\
+            .msb('00').lsb('02').data('00')\
+            .msb('00').lsb('03').add()\
+            .msb('00').lsb('04').data('01')\
+            .msb('00').lsb('05').data('01')\
+            .msb('00').lsb('06').store()\
+            .msb('00').lsb('07').data('FF')\
+            .msb('00').lsb('08').data('00')\
+            .msb('00').lsb('09').sub()\
+            .msb('00').lsb('0A').data('01')\
+            .msb('00').lsb('0B').data('01')\
+            .msb('00').lsb('0C').jz()\
+            .msb('00').lsb('0D').data('FF')\
+            .msb('00').lsb('0E').data('FF')\
+            \
+            .msb('01').lsb('00').data('00').comment(' 0')\
+            .msb('01').lsb('01').data('01').comment(' 1')\
+            .build()
+
+        byte_core = ByteCore(memory_bytes)
+
+        # Act
+        for _ in range(5):
+            byte_core.cycle()
+        dump = byte_core.dump()
+
+        # Assert
+        assert dump.accumulator == expected_accumulator
+        assert dump.pc_msb_register == expected_msb_register
+        assert dump.pc_lsb_register == expected_lsb_register
+        assert dump.memory[int('FF_00', 16)] == expected_stored_value
+
+    def test__cycle__chaining_load_add_store_sub_sub_jz__accumulator_and_pc_and_stored_value_contains_expected_values(self) -> None:
+        # Arrange
+        expected_accumulator = Byte(255)
+        expected_msb_register = Byte(0)
+        expected_lsb_register = Byte(18)
+        expected_stored_value = Byte(1)
+        memory_bytes = MemoryBytesBuilder()\
+            .msb('00').lsb('00').load()\
+            .msb('00').lsb('01').data('01')\
+            .msb('00').lsb('02').data('00')\
+            .msb('00').lsb('03').add()\
+            .msb('00').lsb('04').data('01')\
+            .msb('00').lsb('05').data('01')\
+            .msb('00').lsb('06').store()\
+            .msb('00').lsb('07').data('FF')\
+            .msb('00').lsb('08').data('00')\
+            .msb('00').lsb('09').sub()\
+            .msb('00').lsb('0A').data('01')\
+            .msb('00').lsb('0B').data('01')\
+            .msb('00').lsb('0C').sub()\
+            .msb('00').lsb('0D').data('01')\
+            .msb('00').lsb('0E').data('01')\
+            .msb('00').lsb('0F').jz()\
+            .msb('00').lsb('10').data('FF')\
+            .msb('00').lsb('11').data('FF')\
+            \
+            .msb('01').lsb('00').data('00').comment(' 0')\
+            .msb('01').lsb('01').data('01').comment(' 1')\
+            .build()
+
+        byte_core = ByteCore(memory_bytes)
+
+        # Act
+        for _ in range(6):
+            byte_core.cycle()
+        dump = byte_core.dump()
+
+        # Assert
+        assert dump.accumulator == expected_accumulator
+        assert dump.pc_msb_register == expected_msb_register
+        assert dump.pc_lsb_register == expected_lsb_register
+        assert dump.memory[int('FF_00', 16)] == expected_stored_value
