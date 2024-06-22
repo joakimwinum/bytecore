@@ -51,6 +51,9 @@ jobs:
         os: [ubuntu-latest]
         python-version: ["3.11"]
 
+    env:
+      PACKAGE_NAME: bytecore
+
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
       - name: Setup Python
@@ -63,8 +66,8 @@ jobs:
         run: python -m build
       - name: Test self building package
         run: |
-          pip install dist/bytecore-*.tar.gz
-          python -c "import bytecore; print(bytecore)"
+          pip install dist/${{ env.PACKAGE_NAME }}-*.tar.gz
+          python -c "import ${{ env.PACKAGE_NAME }}; print(${{ env.PACKAGE_NAME }})"
         shell: bash
       - name: Upload distribution archives
         uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808
@@ -103,6 +106,9 @@ jobs:
     permissions:
       id-token: write
 
+    env:
+      PACKAGE_NAME: bytecore
+
     steps:
     - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
     - name: Download combined distribution archives
@@ -121,19 +127,19 @@ jobs:
       run: |
         for file in dist/*; do
           filename=$(basename "$file")
-          if [[ $filename != bytecore-$TAG* ]]; then
-            echo "File $filename does not start with bytecore-$TAG"
+          if [[ $filename != ${{ env.PACKAGE_NAME }}-$TAG* ]]; then
+            echo "File $filename does not start with ${{ env.PACKAGE_NAME }}-$TAG"
             exit 1
           fi
         done
-        echo "All files in dist directory start with bytecore-$TAG"
+        echo "All files in dist directory start with ${{ env.PACKAGE_NAME }}-$TAG"
     - name: Verify existence of source distribution archive
       run: |
-        if [[ ! -f dist/bytecore-$TAG.tar.gz ]]; then
-          echo "Error: dist/bytecore-$TAG.tar.gz does not exist."
+        if [[ ! -f dist/${{ env.PACKAGE_NAME }}-$TAG.tar.gz ]]; then
+          echo "Error: dist/${{ env.PACKAGE_NAME }}-$TAG.tar.gz does not exist."
           exit 1
         fi
-        echo "dist/bytecore-$TAG.tar.gz exists."
+        echo "dist/${{ env.PACKAGE_NAME }}-$TAG.tar.gz exists."
     - name: Verify version in pyproject.toml
       run: |
         VERSION=$(grep --perl-regexp --only-matching '(?<=^version = ")[^"]*' pyproject.toml)
