@@ -1,0 +1,151 @@
+name: Build, Test, and Publish Python Package
+
+on: [push]
+
+jobs:
+  tests:
+
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11"]
+
+    steps:
+    - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+    - name: Lint with autopep8 and get statistics from flake8
+      run: |
+        # exit-zero treats all errors as warnings.
+        # show statistics for Python syntax errors or undefined names.
+        # the GitHub editor is 127 chars wide.
+        flake8 . --count --exit-zero --extend-ignore E402 --max-complexity=10 --max-line-length=127 --show-source --statistics
+        # stop the build if there are Python syntax errors.
+        autopep8 . --ignore E402 --recursive --diff --exit-code
+    - name: Install local package
+      run: |
+        python -m pip install --editable .
+    - name: Test with pytest
+      run: |
+        coverage run -m pytest
+    - name: Report coverage statistics on modules
+      run: |
+        coverage report --fail-under=80 --show-missing
+    - name: Type checking with mypy
+      run: |
+        mypy --strict --exclude='src' .
+
+  build:
+
+    needs: [tests]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.11"]
+
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+      - name: Setup Python
+        uses: actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Build package
+        run: python -m build
+      - name: Test self building package
+        run: |
+          pip install dist/bytecore-*.tar.gz
+          python -c "import bytecore; print(bytecore)"
+        shell: bash
+      - name: Upload distribution archives
+        uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808
+        with:
+          name: distribution-archives-${{ matrix.os }}-${{ matrix.python-version }}
+          path: dist
+
+  combine:
+
+    needs: [tests, build]
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download All Artifacts
+      uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e
+      with:
+        path: distribution-archives
+        pattern: distribution-archives-*
+        merge-multiple: true
+    - name: List distribution archives
+      run: ls --recursive distribution-archives
+    - name: Upload combined distribution archives
+      uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808
+      with:
+        name: combined-distribution-archives
+        path: distribution-archives
+
+  publish:
+
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: [tests, build, combine]
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/bytecore
+    permissions:
+      id-token: write
+
+    steps:
+    - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+    - name: Download combined distribution archives
+      uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e
+      with:
+        name: combined-distribution-archives
+        path: dist
+    - name: List dist folder
+      run: ls --recursive dist
+    - name: Extract and store tag
+      run: |
+        TAG=${GITHUB_REF#refs/tags/}
+        echo "Tag: $TAG"
+        echo "TAG=$TAG" >> $GITHUB_ENV
+    - name: Verify version in combined distribution archives
+      run: |
+        for file in dist/*; do
+          filename=$(basename "$file")
+          if [[ $filename != bytecore-$TAG* ]]; then
+            echo "File $filename does not start with bytecore-$TAG"
+            exit 1
+          fi
+        done
+        echo "All files in dist directory start with bytecore-$TAG"
+    - name: Verify existence of source distribution archive
+      run: |
+        if [[ ! -f dist/bytecore-$TAG.tar.gz ]]; then
+          echo "Error: dist/bytecore-$TAG.tar.gz does not exist."
+          exit 1
+        fi
+        echo "dist/bytecore-$TAG.tar.gz exists."
+    - name: Verify version in pyproject.toml
+      run: |
+        VERSION=$(grep --perl-regexp --only-matching '(?<=^version = ")[^"]*' pyproject.toml)
+        if [[ "$VERSION" != "$TAG" ]]; then
+          echo "Version in pyproject.toml $VERSION does not match the tag $TAG"
+          exit 1
+        fi
+        echo "Version in pyproject.toml matches the tag: $VERSION"
+    - name: Publish package to PyPI
+      uses: pypa/gh-action-pypi-publish@ec4db0b4ddc65acdf4bff5fa45ac92d78b56bdf0
+      with:
+        verify-metadata: true
+        skip-existing: false
+        verbose: false
+        print-hash: true
