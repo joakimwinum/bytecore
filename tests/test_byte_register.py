@@ -3,10 +3,6 @@ from bytecore.byte import Byte
 
 
 class TestByteRegister:
-    def test_dummy_test(self) -> None:
-        # Arrange, act and assert
-        assert 0 == 0
-
     def test__decimal__init__returns_0(self) -> None:
         # Arrange
         expected = Byte(0)

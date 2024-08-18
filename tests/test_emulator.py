@@ -7,10 +7,6 @@ from bytecore.memory_bytes_builder import MemoryBytesBuilder
 
 
 class TestEmulator:
-    def test_dummy_test(self) -> None:
-        # Arrange, act and assert
-        assert 0 == 0
-
     def test__dump__after_init__returns_default_values(self) -> None:
         # Arrange
         byte_core = ByteCore(Memory.get_default_memory_bytes())

@@ -6,10 +6,6 @@ from bytecore.memory_bytes_builder import MemoryBytesBuilder
 
 
 class TestMemoryBytesBuilder:
-    def test_dummy_test(self) -> None:
-        # Arrange, act and assert
-        assert 0 == 0
-
     def test__build__simple_example_program__build_is_the_same(self) -> None:
         # Arrange
         memory_bytes = Memory.get_default_memory_bytes()

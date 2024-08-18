@@ -7,10 +7,6 @@ from bytecore.opcode import Opcode
 
 
 class TestCpu:
-    def test_dummy_test(self) -> None:
-        # Arrange, act and assert
-        assert 0 == 0
-
     def test__dump__after_init__returns_default_values(self) -> None:
         # Arrange
         memory = Memory(Memory.get_default_memory_bytes())

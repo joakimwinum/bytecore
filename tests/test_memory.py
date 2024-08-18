@@ -3,10 +3,6 @@ from bytecore.byte import Byte
 
 
 class TestMemory:
-    def test_dummy_test(self) -> None:
-        # Arrange, act and assert
-        assert 0 == 0
-
     def test__get_bus__write_to_bus__returns_same_value(self) -> None:
         # Arrange
         expected = Byte(255)

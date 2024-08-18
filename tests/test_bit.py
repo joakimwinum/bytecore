@@ -3,10 +3,6 @@ from bytecore.bit import Bit
 
 
 class TestBit:
-    def test_dummy_test(self) -> None:
-        # Arrange, act and assert
-        assert 0 == 0
-
     def test__value_init_0__returns_init_value(self) -> None:
         # Arrange
         value = 0
