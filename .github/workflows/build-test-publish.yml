@@ -12,9 +12,9 @@ jobs:
         python-version: ["3.11"]
 
     steps:
-    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+    - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
@@ -55,9 +55,9 @@ jobs:
       PACKAGE_NAME: bytecore
 
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/checkout@v4
       - name: Setup Python
-        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
@@ -70,7 +70,7 @@ jobs:
           python -c "import ${{ env.PACKAGE_NAME }}; print(${{ env.PACKAGE_NAME }})"
         shell: bash
       - name: Upload distribution archives
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882
+        uses: actions/upload-artifact@v4
         with:
           name: distribution-archives-${{ matrix.os }}-${{ matrix.python-version }}
           path: dist
@@ -82,7 +82,7 @@ jobs:
 
     steps:
     - name: Download All Artifacts
-      uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16
+      uses: actions/download-artifact@v4
       with:
         path: distribution-archives
         pattern: distribution-archives-*
@@ -90,7 +90,7 @@ jobs:
     - name: List distribution archives
       run: ls --recursive distribution-archives
     - name: Upload combined distribution archives
-      uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882
+      uses: actions/upload-artifact@v4
       with:
         name: combined-distribution-archives
         path: distribution-archives
@@ -110,9 +110,9 @@ jobs:
       PACKAGE_NAME: bytecore
 
     steps:
-    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+    - uses: actions/checkout@v4
     - name: Download combined distribution archives
-      uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16
+      uses: actions/download-artifact@v4
       with:
         name: combined-distribution-archives
         path: dist
