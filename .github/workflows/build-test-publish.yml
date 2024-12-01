@@ -12,7 +12,7 @@ jobs:
         python-version: ["3.11"]
 
     steps:
-    - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3
       with:
@@ -55,7 +55,7 @@ jobs:
       PACKAGE_NAME: bytecore
 
     steps:
-      - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - name: Setup Python
         uses: actions/setup-python@f677139bbe7f9c59b41e40162b753c062f5d49a3
         with:
@@ -110,7 +110,7 @@ jobs:
       PACKAGE_NAME: bytecore
 
     steps:
-    - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
     - name: Download combined distribution archives
       uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16
       with:
