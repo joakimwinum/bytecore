@@ -14,3 +14,10 @@ updates:
       day: "tuesday"
       time: "19:30"
       timezone: "Europe/Oslo"
+  - package-ecosystem: "devcontainers"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "tuesday"
+      time: "19:30"
+      timezone: "Europe/Oslo"

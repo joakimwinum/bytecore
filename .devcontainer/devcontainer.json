@@ -1,0 +1,21 @@
+{
+    "name": "python3.11-devcontainer",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "postCreateCommand": "bash .devcontainer/postCreateCommand.sh",
+    "postStartCommand": "bash .devcontainer/postStartCommand.sh",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "streetsidesoftware.code-spell-checker", // The Code Spell Checker extension is GPLv3-licensed, separate from this project. See its docs for details.
+                "ms-toolsai.jupyter", // The Jupyter extension is MIT-licensed, separate from this project. See its docs for details.
+                "ms-toolsai.jupyter-keymap", // The Jupyter Keymap extension is MIT-licensed, separate from this project. See its docs for details.
+                "ms-toolsai.jupyter-renderers", // The Jupyter Notebook Renderers extension is MIT-licensed, separate from this project. See its docs for details.
+                "ms-toolsai.vscode-jupyter-cell-tags", // The Jupyter Cell Tags extension is MIT-licensed, separate from this project. See its docs for details.
+                "ms-toolsai.vscode-jupyter-slideshow", // The Jupyter Slide Show extension is MIT-licensed, separate from this project. See its docs for details.
+                "ms-python.python" // The Python extension is MIT-licensed, separate from this project. Dependencies: Jupyter (MIT), Pylance (Microsoft proprietary). See docs for details.
+            ]
+        }
+    }
+}

@@ -100,9 +100,9 @@ To install the necessary dependencies, run:
 pip3 install -r requirements.txt
 ```
 
-### Gitpod Setup
+### Codespaces Setup
 
-You can also use Gitpod to run the emulator by clicking [here](https://gitpod.io/#https://github.com/joakimwinum/bytecore).
+You can also use Codespaces to run the emulator by clicking [here](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=joakimwinum/bytecore).
 
 ### Running the Emulator
 
