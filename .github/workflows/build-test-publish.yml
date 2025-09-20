@@ -12,7 +12,7 @@ jobs:
         python-version: ["3.11"]
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
       with:
@@ -55,7 +55,7 @@ jobs:
       PACKAGE_NAME: bytecore
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -110,7 +110,7 @@ jobs:
       PACKAGE_NAME: bytecore
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Download combined distribution archives
       uses: actions/download-artifact@v4
       with:
