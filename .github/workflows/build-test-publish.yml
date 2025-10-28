@@ -70,7 +70,7 @@ jobs:
           python -c "import ${{ env.PACKAGE_NAME }}; print(${{ env.PACKAGE_NAME }})"
         shell: bash
       - name: Upload distribution archives
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: distribution-archives-${{ matrix.os }}-${{ matrix.python-version }}
           path: dist
@@ -90,7 +90,7 @@ jobs:
     - name: List distribution archives
       run: ls --recursive distribution-archives
     - name: Upload combined distribution archives
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: combined-distribution-archives
         path: distribution-archives
