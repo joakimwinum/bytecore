@@ -82,7 +82,7 @@ jobs:
 
     steps:
     - name: Download All Artifacts
-      uses: actions/download-artifact@v7
+      uses: actions/download-artifact@v8
       with:
         path: distribution-archives
         pattern: distribution-archives-*
@@ -112,7 +112,7 @@ jobs:
     steps:
     - uses: actions/checkout@v6
     - name: Download combined distribution archives
-      uses: actions/download-artifact@v7
+      uses: actions/download-artifact@v8
       with:
         name: combined-distribution-archives
         path: dist
